@@ -12,6 +12,7 @@ namespace Encryptor
     {
         public Aes blobAes;
 
+        //all the instance variables are in both string and byte format
         public string clearText;
         public byte[] clearTextByte;
 
@@ -27,90 +28,107 @@ namespace Encryptor
         public string IV;
         public byte[] byteIV;
         
-        private ICryptoTransform cryptoXform;
-        private ICryptoTransform decryptor;
+        // Note to self: Maybe the byte arrays dont need to be public?!
+
+        private ICryptoTransform encryptorBlock;
+        private ICryptoTransform decryptorBlock;
         
+
+        // Class Constructor
         public SymmetricEncryption()
         {
-            Aes aesCipher = Aes.Create();
-            blobAes = aesCipher;
+            Aes aesCipher = Aes.Create();   
+            // Instantiate Aes class into aesCipher Object
+            
+            blobAes = aesCipher;    
+            // saving the aesCipher object into the instance variable blobAes (Will need to refer to it)
+            
+            aesCipher.Dispose();    
+            // goes out of scope
+
+
+            // ********** Optional settings **********
             // cipher.Padding = Padding.Mode.Zeros;
             // cipher.Mode = CipherMode.ECB;
             //Create() makes a new key each time, use a consistent key for encryption/decryption
 
+
             IV = Convert.ToBase64String(blobAes.IV);
+            // Converts the initialization vector from a byte array to a string (useful)
+
             blobAes.Padding = PaddingMode.ISO10126;
+            // Padding option
 
             ICryptoTransform cryptoTransform = blobAes.CreateEncryptor();
-            ICryptoTransform xdecrypto = blobAes.CreateDecryptor(blobAes.Key, blobAes.IV);
+            // Creates the initial Block Encryptor
+
+            ICryptoTransform decryptorTransform = blobAes.CreateDecryptor(blobAes.Key, blobAes.IV);
+            // Creates the initial Block Decryptor
+
             byteKey = blobAes.Key;
             byteIV = blobAes.IV;
+            // Saves a byte array version of the Key and the initialization vector
 
-            decryptor = xdecrypto;
-            cryptoXform = cryptoTransform;
+            encryptorBlock = cryptoTransform;
+            // Saves the block Encryptor Locally
+            decryptorBlock = decryptorTransform;
+            // Saves the block Decryptor locally
+
+            //both go out of scope
+            cryptoTransform.Dispose();
+            decryptorTransform.Dispose();
+
         }
 
         
-
-        public void generate_key()
+        // Method to Generate a new key and Initialization Vector
+        public void GenerateKey()
         {
-            //Aes blobAes = Aes.Create();
+            // Generate a new IV
             blobAes.GenerateIV();
             IV = Convert.ToBase64String(blobAes.IV);
+            byteIV = blobAes.IV;
+
+            // Generate a new Key
             blobAes.GenerateKey();
             key = BitConverter.ToString(blobAes.Key).Replace("-", " ");
-            cryptoXform = blobAes.CreateEncryptor();
-            //blobAes.Key = blobAes.Key;
-            //blobAes.Dispose();
             byteKey = blobAes.Key;
-            byteIV = blobAes.IV;
+
+            // Generate a new Block Encryptor
+            encryptorBlock = blobAes.CreateEncryptor();
         }
 
-        public void encrypt(string message, string alg)
+        public void AesEncrypt(string message, string alg)
         {
             clearText = message;            
 
             if (alg == "AES")
             {
-                ICryptoTransform xdecrypto = blobAes.CreateDecryptor();
+                // Turn cleartext into byte array
                 byte[] byteClearText = Encoding.UTF8.GetBytes(clearText);
-                byte[] byteCipher = cryptoXform.TransformFinalBlock(byteClearText, 0, byteClearText.Length);
+
+                // Encrypt the bloody thing
+                byte[] byteCipher = encryptorBlock.TransformFinalBlock(byteClearText, 0, byteClearText.Length);
+                
+                // Attribute shenanigans
                 cipherByteAes = byteCipher;
                 cipherTextAes = Convert.ToBase64String(byteCipher);
             }
         }
-        public void decrypt(string alg)
+        public void AesDecrypt(string alg)
         {
             if (alg == "AES")
             {
-
-                decryptor = blobAes.CreateDecryptor(byteKey, byteIV);
-                //byte[] byteCipherUnpadded = cipherByteAes;
-                decryptedByteAes = decryptor.TransformFinalBlock(cipherByteAes, 0, cipherByteAes.Length ); // / blobAes.BlockSize
+                // Generate the relevant decryption block
+                decryptorBlock = blobAes.CreateDecryptor(byteKey, byteIV);
+                decryptedByteAes = decryptorBlock.TransformFinalBlock(cipherByteAes, 0, cipherByteAes.Length ); 
+                
+                // Finally recover the original message
                 decryptedText = Encoding.UTF8.GetString(decryptedByteAes);
-                    //BitConverter.ToString(Decoding.UTF8(decryptedByteAes)).Replace("-","");
+
+                // WARNING: PROGRAM CRASHES WHEN THE CREATEDECRYPTOR METHOD GETS FED THE WRONG KEY
             }
         }
     }
 }
 
-
-/*private static byte[] HexToByteArray(string hex)
-{
-    return Enumerable.Range(0, hex.Length)
-        .Where(x => x % 2 == 0)
-        .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
-        .ToArray();
-}
-private Aes CreateAesEncryptor()
-{
-    Aes blobAes = Aes.Create();
-
-
-
-
-    blobAes.Key = generatedKey;
-    return blobAes;
-}
-
-*/
