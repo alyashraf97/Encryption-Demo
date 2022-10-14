@@ -104,29 +104,44 @@ namespace Encryptor
 
             if (alg == "AES")
             {
-                // Turn cleartext into byte array
-                byte[] byteClearText = Encoding.UTF8.GetBytes(clearText);
+                try
+                {
 
-                // Encrypt the bloody thing
-                byte[] byteCipher = encryptorBlock.TransformFinalBlock(byteClearText, 0, byteClearText.Length);
-                
-                // Attribute shenanigans
-                cipherByteAes = byteCipher;
-                cipherTextAes = Convert.ToBase64String(byteCipher);
+                    // Turn cleartext into byte array
+                    byte[] byteClearText = Encoding.UTF8.GetBytes(clearText);
+
+                    // Encrypt the bloody thing
+                    byte[] byteCipher = encryptorBlock.TransformFinalBlock(byteClearText, 0, byteClearText.Length);
+
+                    // Attribute shenanigans
+                    cipherByteAes = byteCipher;
+                    cipherTextAes = Convert.ToBase64String(byteCipher);
+                }
+                catch
+                {
+                    cipherTextAes = "Error, Invalid Key or Initialization Vector!";
+                }
             }
         }
         public void AesDecrypt(string alg)
         {
             if (alg == "AES")
             {
-                // Generate the relevant decryption block
-                decryptorBlock = blobAes.CreateDecryptor(byteKey, byteIV);
-                decryptedByteAes = decryptorBlock.TransformFinalBlock(cipherByteAes, 0, cipherByteAes.Length ); 
-                
-                // Finally recover the original message
-                decryptedText = Encoding.UTF8.GetString(decryptedByteAes);
+                try
+                {
+                    // Generate the relevant decryption block
+                    decryptorBlock = blobAes.CreateDecryptor(byteKey, byteIV);
+                    decryptedByteAes = decryptorBlock.TransformFinalBlock(cipherByteAes, 0, cipherByteAes.Length);
 
-                // WARNING: PROGRAM CRASHES WHEN THE CREATEDECRYPTOR METHOD GETS FED THE WRONG KEY
+                    // Finally recover the original message
+                    decryptedText = Encoding.UTF8.GetString(decryptedByteAes);
+
+                    // WARNING: PROGRAM CRASHES WHEN THE CREATEDECRYPTOR METHOD GETS FED THE WRONG KEY
+                }
+                catch
+                {
+                    decryptedText = "Error, Incorrect Key";
+                }
             }
         }
     }

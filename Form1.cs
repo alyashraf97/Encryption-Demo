@@ -89,7 +89,8 @@ namespace Encryptor
         private void symEncryptBtn_Click(object sender, EventArgs e)
         {
             if (symMsg.Text != "" && symKey.Text != "")
-            {                
+            {
+                symEnc.key = symKey.Text;
                 symEnc.AesEncrypt(symMsg.Text, comboBox2.Text);
                 symCipher.Text = symEnc.cipherTextAes;
                 symIV.Text = symEnc.IV;

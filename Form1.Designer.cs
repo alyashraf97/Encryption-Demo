@@ -132,7 +132,6 @@
             // 
             this.symKey.Location = new System.Drawing.Point(120, 152);
             this.symKey.Name = "symKey";
-            this.symKey.ReadOnly = true;
             this.symKey.Size = new System.Drawing.Size(456, 56);
             this.symKey.TabIndex = 20;
             this.symKey.Text = "";
@@ -276,7 +275,7 @@
             // clearButton
             // 
             this.clearButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.clearButton.Location = new System.Drawing.Point(592, 200);
+            this.clearButton.Location = new System.Drawing.Point(592, 216);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(104, 40);
             this.clearButton.TabIndex = 7;
@@ -319,7 +318,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(24, 160);
+            this.label2.Location = new System.Drawing.Point(24, 200);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(45, 21);
             this.label2.TabIndex = 3;
@@ -339,9 +338,9 @@
             // 
             // hashOutput
             // 
-            this.hashOutput.Location = new System.Drawing.Point(112, 152);
+            this.hashOutput.Location = new System.Drawing.Point(112, 192);
             this.hashOutput.Name = "hashOutput";
-            this.hashOutput.Size = new System.Drawing.Size(456, 144);
+            this.hashOutput.Size = new System.Drawing.Size(456, 88);
             this.hashOutput.TabIndex = 1;
             this.hashOutput.Text = "";
             // 
@@ -349,7 +348,7 @@
             // 
             this.cleartextInput.Location = new System.Drawing.Point(112, 56);
             this.cleartextInput.Name = "cleartextInput";
-            this.cleartextInput.Size = new System.Drawing.Size(456, 80);
+            this.cleartextInput.Size = new System.Drawing.Size(456, 120);
             this.cleartextInput.TabIndex = 0;
             this.cleartextInput.Text = "";
             this.cleartextInput.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
