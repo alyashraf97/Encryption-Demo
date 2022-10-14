@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Github repos\\Encryptor\\Encryptor\\Encryptor.csproj": {}
+    "F:\\Github repos\\Encryptor\\Encryptor.csproj": {}
   },
   "projects": {
-    "F:\\Github repos\\Encryptor\\Encryptor\\Encryptor.csproj": {
+    "F:\\Github repos\\Encryptor\\Encryptor.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Github repos\\Encryptor\\Encryptor\\Encryptor.csproj",
+        "projectUniqueName": "F:\\Github repos\\Encryptor\\Encryptor.csproj",
         "projectName": "Encryptor",
-        "projectPath": "F:\\Github repos\\Encryptor\\Encryptor\\Encryptor.csproj",
+        "projectPath": "F:\\Github repos\\Encryptor\\Encryptor.csproj",
         "packagesPath": "C:\\Users\\Gebz\\.nuget\\packages\\",
-        "outputPath": "F:\\Github repos\\Encryptor\\Encryptor\\obj\\",
+        "outputPath": "F:\\Github repos\\Encryptor\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
