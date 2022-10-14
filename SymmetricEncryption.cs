@@ -4,51 +4,58 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Encryptor
 {
     public class SymmetricEncryption
     {
+        public Aes blobAes;
+
         public string clearText;
-        public string hexKey;
+        public byte[] clearTextByte;
+
+        public string cipherTextAes;
+        public byte[] cipherByteAes;
+        
+        public string decryptedText;
+        public byte[] decryptedByteAes;
+        
         public string key;
-        public byte[] generatedKey;
-        public string cipherText;
         public string IV;
+        
+        private ICryptoTransform cryptoXform;
+        private ICryptoTransform decryptor;
         
         public SymmetricEncryption()
         {
+            Aes aesCipher = Aes.Create();
+            blobAes = aesCipher;
+            // cipher.Padding = Padding.Mode.Zeros;
+            // cipher.Mode = CipherMode.ECB;
+            //Create() makes a new key each time, use a consistent key for encryption/decryption
+
+            IV = Convert.ToBase64String(blobAes.IV);
+            blobAes.Padding = PaddingMode.ISO10126;
+
+            ICryptoTransform cryptoTransform = blobAes.CreateEncryptor();
+            ICryptoTransform xdecrypto = blobAes.CreateDecryptor();
+            decryptor = xdecrypto;
+            cryptoXform = cryptoTransform;
         }
 
-        private static byte[] HexToByteArray(string hex)
-        {
-            return Enumerable.Range(0, hex.Length)
-                .Where(x => x % 2 == 0)
-                .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
-                .ToArray();
-        }
+        
 
         public void generate_key()
         {
-            Aes blobAes = Aes.Create();
+            //Aes blobAes = Aes.Create();
             blobAes.GenerateIV();
+            IV = Convert.ToBase64String(blobAes.IV);
             blobAes.GenerateKey();
-            //generatedKey = BitConverter.ToString(blobAes.Key).Replace("-", " ");
-            generatedKey = blobAes.Key;
+            key = BitConverter.ToString(blobAes.Key).Replace("-", " ");
+            cryptoXform = blobAes.CreateEncryptor();
+            //blobAes.Key = blobAes.Key;
             blobAes.Dispose();
-        }
-
-        private Aes CreateAesCipher()
-        {
-            Aes cipher = Aes.Create();
-            cipher.Padding = PaddingMode.ISO10126;
-
-            // cipher.Padding = Padding.Mode.Zeros;
-            // cipher.Mode = CipherMode.ECB;
-
-            //Create() makes a new key each time, use a consistent key for encryption/decryption
-            cipher.Key = generatedKey;
-            return cipher;
         }
 
         public void encrypt(string message, string alg)
@@ -57,17 +64,40 @@ namespace Encryptor
 
             if (alg == "AES")
             {
-                Aes aesCipher = CreateAesCipher();
-                IV = Convert.ToBase64String(aesCipher.IV);
-                ICryptoTransform cryptoTransform = aesCipher.CreateEncryptor();
+                
                 byte[] byteClearText = Encoding.UTF8.GetBytes(clearText);
-                byte[] byteCipher = cryptoTransform.TransformFinalBlock(byteClearText, 0, byteClearText.Length);
-                cipherText = Convert.ToBase64String(byteCipher);
+                byte[] byteCipher = cryptoXform.TransformFinalBlock(byteClearText, 0, byteClearText.Length);
+                cipherByteAes = byteCipher;
+                cipherTextAes = Convert.ToBase64String(byteCipher);
             }
         }
-        public void decrypt(string encryptedCipher, string encKey, string alg)
+        public void decrypt(byte[] encryptedCipher, string alg)
         {
-            
+            if (alg == "AES")
+            {
+                decryptedByteAes = decryptor.TransformFinalBlock(encryptedCipher, 0, cipherTextAes.Length);                
+            }
         }
     }
 }
+
+
+/*private static byte[] HexToByteArray(string hex)
+{
+    return Enumerable.Range(0, hex.Length)
+        .Where(x => x % 2 == 0)
+        .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+        .ToArray();
+}
+private Aes CreateAesEncryptor()
+{
+    Aes blobAes = Aes.Create();
+
+
+
+
+    blobAes.Key = generatedKey;
+    return blobAes;
+}
+
+*/

@@ -23,7 +23,7 @@ namespace Encryptor
         public void compute_hash(string message, string alg)
         {
             clearText = message;
-            byte[] hashed;
+            //byte[] hashed;
                 
                 if ( alg =="MD5") // MD5 hash
                 {

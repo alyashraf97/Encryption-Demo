@@ -67,7 +67,8 @@ namespace Encryptor
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-
+            symEnc.decrypt(symEnc.cipherByteAes, comboBox2.Text);
+            symDecrypted.Text = symEnc.decryptedText;
         }
 
         private void label7_Click(object sender, EventArgs e)
@@ -90,7 +91,7 @@ namespace Encryptor
             if (symMsg.Text != "" && symKey.Text != "")
             {                
                 symEnc.encrypt(symMsg.Text, comboBox2.Text);
-                symCipher.Text = symEnc.cipherText;
+                symCipher.Text = symEnc.cipherTextAes;
                 symIV.Text = symEnc.IV;
             }
             else
@@ -108,7 +109,7 @@ namespace Encryptor
         private void generateSymEncKey_Click(object sender, EventArgs e)
         {
             symEnc.generate_key();
-            symKey.Text = BitConverter.ToString(symEnc.generatedKey).Replace("-", " ");
+            symKey.Text = symEnc.key.Replace("-", " ");
         }
     }
 }
