@@ -17,15 +17,6 @@ namespace Encryptor
         public Hash() // Hash class constructor
         {
 
-            /*bool algExists = Array.Exists(algs, element => element == Algorithm);
-
-            if (algExists == true)
-            {
-                clearText = ClearText;
-                algorithm = Algorithm; 
-
-            }
-            */
         }
 
 
@@ -33,10 +24,7 @@ namespace Encryptor
         {
             clearText = message;
             byte[] hashed;
-            //bool algExists = Array.Exists(algs, element => element == alg);
-
-            //if (algExists == true)
-            //{
+                
                 if ( alg =="MD5") // MD5 hash
                 {
                     MD5 md5Hash = MD5.Create();
