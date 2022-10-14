@@ -87,13 +87,27 @@ namespace Encryptor
 
         private void symEncryptBtn_Click(object sender, EventArgs e)
         {
-            symEnc.encrypt(symEncryptEntry.Text, symEncKey.Text, comboBox2.Text);
-            symCipherText.Text = symEnc.cipherText;
+            if (symMsg.Text != "" && symKey.Text != "")
+            {                
+                symEnc.encrypt(symMsg.Text, comboBox2.Text);
+                symCipher.Text = symEnc.cipherText;            
+            }
+            else
+            {
+                symCipher.Text = "Error, One of the fields is empty! [Either generate a key or enter a message]";
+            }
+
         }
 
         private void label10_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void generateSymEncKey_Click(object sender, EventArgs e)
+        {
+            symEnc.generate_key();
+            symKey.Text = symEnc.generatedKey;
         }
     }
 }

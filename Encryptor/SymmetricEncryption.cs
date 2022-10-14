@@ -28,9 +28,13 @@ namespace Encryptor
                 .ToArray();
         }
 
-        public void generate_key(string seed)
+        public void generate_key()
         {
-
+            Aes blobAes = Aes.Create();
+            blobAes.GenerateIV();
+            blobAes.GenerateKey();
+            generatedKey = BitConverter.ToString(blobAes.Key).Replace("-", " ");
+            blobAes.Dispose();
         }
 
         private Aes CreateAesCipher()
@@ -42,14 +46,13 @@ namespace Encryptor
             // cipher.Mode = CipherMode.ECB;
 
             //Create() makes a new key each time, use a consistent key for encryption/decryption
-            cipher.Key = HexToByteArray(hexKey);
+            cipher.Key = HexToByteArray(generatedKey);
             return cipher;
         }
 
-        public void encrypt(string message, string encKey, string alg)
+        public void encrypt(string message, string alg)
         {
-            clearText = message;
-            hexKey = encKey;
+            clearText = message;            
 
             if (alg == "AES")
             {
