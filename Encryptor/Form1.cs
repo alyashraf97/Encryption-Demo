@@ -90,7 +90,8 @@ namespace Encryptor
             if (symMsg.Text != "" && symKey.Text != "")
             {                
                 symEnc.encrypt(symMsg.Text, comboBox2.Text);
-                symCipher.Text = symEnc.cipherText;            
+                symCipher.Text = symEnc.cipherText;
+                symIV.Text = symEnc.IV;
             }
             else
             {
@@ -107,7 +108,7 @@ namespace Encryptor
         private void generateSymEncKey_Click(object sender, EventArgs e)
         {
             symEnc.generate_key();
-            symKey.Text = symEnc.generatedKey;
+            symKey.Text = BitConverter.ToString(symEnc.generatedKey).Replace("-", " ");
         }
     }
 }

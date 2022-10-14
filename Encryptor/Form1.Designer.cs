@@ -111,8 +111,9 @@
             // 
             // symIV
             // 
-            this.symIV.Location = new System.Drawing.Point(120, 392);
+            this.symIV.Location = new System.Drawing.Point(120, 224);
             this.symIV.Name = "symIV";
+            this.symIV.ReadOnly = true;
             this.symIV.Size = new System.Drawing.Size(456, 48);
             this.symIV.TabIndex = 22;
             this.symIV.Text = "";
@@ -121,7 +122,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label9.Location = new System.Drawing.Point(16, 392);
+            this.label9.Location = new System.Drawing.Point(16, 224);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(94, 42);
             this.label9.TabIndex = 21;
@@ -179,7 +180,7 @@
             // symDecryptBtn
             // 
             this.symDecryptBtn.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.symDecryptBtn.Location = new System.Drawing.Point(600, 280);
+            this.symDecryptBtn.Location = new System.Drawing.Point(600, 376);
             this.symDecryptBtn.Name = "symDecryptBtn";
             this.symDecryptBtn.Size = new System.Drawing.Size(128, 40);
             this.symDecryptBtn.TabIndex = 15;
@@ -220,7 +221,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(16, 232);
+            this.label5.Location = new System.Drawing.Point(16, 296);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(86, 21);
             this.label5.TabIndex = 11;
@@ -239,7 +240,7 @@
             // 
             // symCipher
             // 
-            this.symCipher.Location = new System.Drawing.Point(120, 224);
+            this.symCipher.Location = new System.Drawing.Point(120, 288);
             this.symCipher.Name = "symCipher";
             this.symCipher.Size = new System.Drawing.Size(456, 152);
             this.symCipher.TabIndex = 9;

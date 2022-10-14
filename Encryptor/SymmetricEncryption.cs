@@ -12,7 +12,7 @@ namespace Encryptor
         public string clearText;
         public string hexKey;
         public string key;
-        public string generatedKey;
+        public byte[] generatedKey;
         public string cipherText;
         public string IV;
         
@@ -33,7 +33,8 @@ namespace Encryptor
             Aes blobAes = Aes.Create();
             blobAes.GenerateIV();
             blobAes.GenerateKey();
-            generatedKey = BitConverter.ToString(blobAes.Key).Replace("-", " ");
+            //generatedKey = BitConverter.ToString(blobAes.Key).Replace("-", " ");
+            generatedKey = blobAes.Key;
             blobAes.Dispose();
         }
 
@@ -46,7 +47,7 @@ namespace Encryptor
             // cipher.Mode = CipherMode.ECB;
 
             //Create() makes a new key each time, use a consistent key for encryption/decryption
-            cipher.Key = HexToByteArray(generatedKey);
+            cipher.Key = generatedKey;
             return cipher;
         }
 
