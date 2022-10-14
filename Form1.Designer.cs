@@ -172,6 +172,7 @@
             // 
             this.symDecrypted.Location = new System.Drawing.Point(120, 456);
             this.symDecrypted.Name = "symDecrypted";
+            this.symDecrypted.ReadOnly = true;
             this.symDecrypted.Size = new System.Drawing.Size(456, 80);
             this.symDecrypted.TabIndex = 16;
             this.symDecrypted.Text = "";

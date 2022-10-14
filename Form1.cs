@@ -67,7 +67,7 @@ namespace Encryptor
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            symEnc.decrypt(symEnc.cipherByteAes, comboBox2.Text);
+            symEnc.decrypt(comboBox2.Text);
             symDecrypted.Text = symEnc.decryptedText;
         }
 

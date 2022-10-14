@@ -22,7 +22,10 @@ namespace Encryptor
         public byte[] decryptedByteAes;
         
         public string key;
+        public byte[] byteKey;
+        
         public string IV;
+        public byte[] byteIV;
         
         private ICryptoTransform cryptoXform;
         private ICryptoTransform decryptor;
@@ -39,7 +42,10 @@ namespace Encryptor
             blobAes.Padding = PaddingMode.ISO10126;
 
             ICryptoTransform cryptoTransform = blobAes.CreateEncryptor();
-            ICryptoTransform xdecrypto = blobAes.CreateDecryptor();
+            ICryptoTransform xdecrypto = blobAes.CreateDecryptor(blobAes.Key, blobAes.IV);
+            byteKey = blobAes.Key;
+            byteIV = blobAes.IV;
+
             decryptor = xdecrypto;
             cryptoXform = cryptoTransform;
         }
@@ -55,7 +61,9 @@ namespace Encryptor
             key = BitConverter.ToString(blobAes.Key).Replace("-", " ");
             cryptoXform = blobAes.CreateEncryptor();
             //blobAes.Key = blobAes.Key;
-            blobAes.Dispose();
+            //blobAes.Dispose();
+            byteKey = blobAes.Key;
+            byteIV = blobAes.IV;
         }
 
         public void encrypt(string message, string alg)
@@ -64,18 +72,23 @@ namespace Encryptor
 
             if (alg == "AES")
             {
-                
+                ICryptoTransform xdecrypto = blobAes.CreateDecryptor();
                 byte[] byteClearText = Encoding.UTF8.GetBytes(clearText);
                 byte[] byteCipher = cryptoXform.TransformFinalBlock(byteClearText, 0, byteClearText.Length);
                 cipherByteAes = byteCipher;
                 cipherTextAes = Convert.ToBase64String(byteCipher);
             }
         }
-        public void decrypt(byte[] encryptedCipher, string alg)
+        public void decrypt(string alg)
         {
             if (alg == "AES")
             {
-                decryptedByteAes = decryptor.TransformFinalBlock(encryptedCipher, 0, cipherTextAes.Length);                
+
+                decryptor = blobAes.CreateDecryptor(byteKey, byteIV);
+                //byte[] byteCipherUnpadded = cipherByteAes;
+                decryptedByteAes = decryptor.TransformFinalBlock(cipherByteAes, 0, cipherByteAes.Length ); // / blobAes.BlockSize
+                decryptedText = Encoding.UTF8.GetString(decryptedByteAes);
+                    //BitConverter.ToString(Decoding.UTF8(decryptedByteAes)).Replace("-","");
             }
         }
     }
