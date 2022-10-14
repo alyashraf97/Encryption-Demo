@@ -67,6 +67,8 @@ namespace Encryptor
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            symEnc.key = symKey.Text;
+            symEnc.cipherTextAes = symCipher.Text;
             symEnc.AesDecrypt(comboBox2.Text);
             symDecrypted.Text = symEnc.decryptedText;
         }
@@ -108,7 +110,7 @@ namespace Encryptor
         }
 
         private void generateSymEncKey_Click(object sender, EventArgs e)
-        {
+        {            
             symEnc.GenerateKey();
             symKey.Text = symEnc.key.Replace("-", " ");
         }
