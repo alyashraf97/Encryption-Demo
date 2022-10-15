@@ -43,10 +43,6 @@ namespace Encryptor
             blobAes = aesCipher;    
             // saving the aesCipher object into the instance variable blobAes (Will need to refer to it)
             
-            aesCipher.Dispose();    
-            // goes out of scope
-
-
             // ********** Optional settings **********
             // cipher.Padding = Padding.Mode.Zeros;
             // cipher.Mode = CipherMode.ECB;
@@ -73,13 +69,7 @@ namespace Encryptor
             // Saves the block Encryptor Locally
             decryptorBlock = decryptorTransform;
             // Saves the block Decryptor locally
-
-            //both go out of scope
-            cryptoTransform.Dispose();
-            decryptorTransform.Dispose();
-
         }
-
         
         // Method to Generate a new key and Initialization Vector
         public void GenerateKey()
@@ -123,6 +113,7 @@ namespace Encryptor
                 }
             }
         }
+
         public void AesDecrypt(string alg)
         {
             if (alg == "AES")
