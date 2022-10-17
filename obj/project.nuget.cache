@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "zkOMKouED/sdHR7vM/gR6BggVTNJ8Mgm6MQdzzDRJyswha3ly4APfdrnISM//gh5vLlFHY2NoZbSzvXCWiAV5Q==",
+  "dgSpecHash": "3PyZ1wgYsoGR8C4x0cDR0zy1DBJi++OXhkPFUbJF+tQMyIiPZgBc7cZ1NMmDPCCrwGtwoR6BQmLPDul2PwWctA==",
   "success": true,
   "projectFilePath": "F:\\Github repos\\Encryptor\\Encryptor.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Gebz\\.nuget\\packages\\serilog\\2.12.0\\serilog.2.12.0.nupkg.sha512",
+    "C:\\Users\\Gebz\\.nuget\\packages\\system.formats.asn1\\5.0.0\\system.formats.asn1.5.0.0.nupkg.sha512",
+    "C:\\Users\\Gebz\\.nuget\\packages\\system.security.accesscontrol\\6.0.0\\system.security.accesscontrol.6.0.0.nupkg.sha512",
+    "C:\\Users\\Gebz\\.nuget\\packages\\system.security.cryptography.cng\\5.0.0\\system.security.cryptography.cng.5.0.0.nupkg.sha512",
+    "C:\\Users\\Gebz\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
